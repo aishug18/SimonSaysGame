@@ -14,40 +14,84 @@
 #include "ui_mainwindow.h"
 #include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(Model* model, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    // from view to model connections
-    // Connect blue button
-    // connect(ui->bluePushButton,
-    //         &QPushButton::clicked,
-    //         model,
-    //         &Model::pressedBlue);
 
-    // // Connect red button
-    // connect(ui->redPushButton,
-    //         &QPushButton::clicked,
-    //         model,
-    //         &Model::pressedRed);
+    /* FROM VIEW TO MODEL CONNECTIONS */
 
-    // // Connect start button
-    // connect(ui->startPushButton,
-    //         &QPushButton::clicked,
-    //         model,
-    //         &Model::startGame);
+    // Connect startPushButton to startGame
+    connect(ui->startPushButton,
+            &QPushButton::clicked,
+            model,
+            &Model::startGame);
+
+    // Player clicked redPushButton
+    connect(ui->redPushButton,
+            &QPushButton::clicked,
+            model,
+            &Model::pressedRed);
+
+    // Player clicked bluePushButton
+    connect(ui->bluePushButton,
+            &QPushButton::clicked,
+            model,
+            &Model::pressedBlue);
 
 
 
-    // // from model to view connections
-    // // Connect progress bar
-    // connect(model,
-    //         &Model::updateProgressBar,
-    //         ui->progressBar,
-    //         &QProgressBar::setValue);   // is this the right slot??
 
+
+    /* FROM MODEL TO VIEW CONNECTIONS */
+
+    // Update progressBar
+    connect(model,
+            &Model::updateProgress,
+            ui->progressBar,
+            &QProgressBar::setValue);
+
+    // Flash redPushButton to bright red
+    connect(model,
+            &Model::lightUpRed,
+            this,
+            &MainWindow::flashRed);
+
+    // Flash bluePushButton to bright blue
+    connect(model,
+            &Model::lightUpBlue,
+            this,
+            &MainWindow::flashBlue);
+
+    // It's the player's turn now
+    connect(model,
+            &Model::playerTurn,
+            this,
+            &MainWindow::enableRedAndBlueButtons);
+
+    // Game over, display gameOverLabel
+    connect(model,
+            &Model::gameOver,
+            this,
+            &MainWindow::displayGameOverLabel);
+
+    // It's the computer's turn to display the sequence
+    connect(model,
+            &Model::computerTurn,
+            this,
+            &MainWindow::disableRedAndBlueButtons);
+
+
+
+    /* FROM VIEW TO VIEW CONNECTIONS */
+
+    // Disable startPushButton after clicked
+    connect(ui->startPushButton,
+            &QPushButton::clicked,
+            this,
+            &MainWindow::disableStart);
 
 
 }
@@ -57,3 +101,34 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::flashRed() {
+    ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
+    // after some time, go back to original color
+    // more work to do here
+}
+
+void MainWindow::flashBlue() {
+    ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
+    // after some time, go back to original color
+    // more work to do here
+}
+
+void MainWindow::enableRedAndBlueButtons() {
+    ui->redPushButton->setEnabled(true);
+    ui->bluePushButton->setEnabled(true);
+}
+
+void MainWindow::disableStart() {
+    ui->startPushButton->setEnabled(false);
+}
+
+void MainWindow::displayGameOverLabel() {
+    ui->gameOverLabel->setStyleSheet("QLabel: {background-color: white; border: black;}");
+    ui->gameOverLabel->setText("GAME OVER\nYOU LOSE!!\nclick Start to play again");
+    ui->startPushButton->setEnabled(true);
+}
+
+void MainWindow::disableRedAndBlueButtons() {
+    ui->redPushButton->setEnabled(false);
+    ui->bluePushButton->setEnabled(false);
+}

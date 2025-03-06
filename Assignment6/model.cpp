@@ -8,6 +8,7 @@
 
 #include "model.h"
 #include <random>
+#include <QTimer>
 
 Model::Model(QObject *parent)
     : QObject{parent},
@@ -16,31 +17,32 @@ Model::Model(QObject *parent)
 {}
 
 void Model::startGame() {
-    // disable start, red, and blue buttons, display sequence
+    displaySequence();
 }
 
 void Model::buildSequence() {
     sequence.push_back(std::rand() % 2);
     currentPosition = 0;
+    emit computerTurn();
     displaySequence();
 }
 
 void Model::pressedRed() {
     emit lightUpRed();
-    if(sequence[currentPosition] == 0) {
-        // player is correct
+
+    if(sequence[currentPosition] == 0) {    // Player is correct
         currentPosition++;
-        if(currentPosition >= sequence.size()) {    // comparing int to size_t is an issue, fix comparison type
-            buildSequence();
+
+        if(currentPosition >= static_cast<int>(sequence.size())) {
             emit updateProgress(100);
             // wait, then reset progress to 0.
+            buildSequence();
         }
         else {
             emit updateProgress(currentPosition/sequence.size() * 100);
         }
     }
-    else {
-        // game over
+    else {  // Player made a mistake, game over
         resetGame();
         emit gameOver();
     }
@@ -48,20 +50,20 @@ void Model::pressedRed() {
 
 void Model::pressedBlue() {
     emit lightUpBlue();
-    if(sequence[currentPosition] == 1) {
-        // player is correct
+
+    if(sequence[currentPosition] == 1) {    // Player is correct
         currentPosition++;
-        if(currentPosition >= sequence.size()) {
-            buildSequence();
+
+        if(currentPosition >= static_cast<int>(sequence.size())) {
             emit updateProgress(100);
-            // wait, then reset progress to 0.
+            // wait, then reset progress to 0
+            buildSequence();
         }
         else {
             emit updateProgress(currentPosition/sequence.size() * 100);
         }
     }
-    else {
-        // game over
+    else {  // Player made a mistake, game over
         resetGame();
         emit gameOver();
     }
@@ -69,11 +71,20 @@ void Model::pressedBlue() {
 
 void Model::displaySequence() {
     // use QTimer
-    // after displaying sequence, enable red and blue buttons
+
+    for(size_t i = 0; i < sequence.size(); i++) {
+        if(sequence[i] == 0) {
+            emit lightUpRed();
+        }
+        else {
+            emit lightUpBlue();
+        }
+    }
+
+    emit playerTurn();  // to enable red and blue buttons
 }
 
 void Model::resetGame() {
     sequence.clear();
     currentPosition = 0;
-    // enable/disable buttons
 }

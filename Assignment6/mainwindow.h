@@ -14,6 +14,7 @@
  */
 
 #include <QMainWindow>
+#include "model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,9 +26,42 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+public slots:
+    /**
+     * Flash redPushButton to a bright red, then go back to original color after
+     * some amount of time.
+     */
+    void flashRed();
+
+    /**
+     * Flash bluePushButton to a bright blue, then go back to original color after
+     * some amount of time.
+     */
+    void flashBlue();
+
+    /**
+     * It's the player's turn now, so enable red and blue push buttons.
+     */
+    void enableRedAndBlueButtons();
+
+    /**
+     * Disable startPushButton since the game has started.
+     */
+    void disableStart();
+
+    /**
+     * The game has ended, so display a "Game over" message and enable startPushButton.
+     */
+    void displayGameOverLabel();
+
+    /**
+     * It's the computer's turn to display the sequence, so disable red and blue
+     * push buttons.
+     */
+    void disableRedAndBlueButtons();
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(Model* model, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:

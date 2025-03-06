@@ -19,7 +19,22 @@ class Model : public QObject
 private:
     std::vector<int> sequence; // store the sequence of colors emitted, red = 0, blue = 1
     int currentPosition;
+
+    /**
+     * Build the sequence of colors by adding a new, random color to the end of sequence.
+     * Then display the sequence.
+     */
     void buildSequence();
+
+    /**
+     * Display the computer-generated sequence.
+     */
+    void displaySequence();
+
+    /**
+     * Game over, reset the game.
+     */
+    void resetGame();
 
 public:
     explicit Model(QObject *parent = nullptr);
@@ -41,17 +56,6 @@ public slots:
      * The player pressed the blue button.
      */
     void pressedBlue();
-
-    /**
-     * Display the computer-generated sequence.
-     * After sequence is played, enable red and blue buttons.
-     */
-    void displaySequence();
-
-    /**
-     * Game over, reset the game.
-     */
-    void resetGame();
 
 signals:
     /**
@@ -78,11 +82,22 @@ signals:
      */
     void updateProgress(int percentage);
 
+    /**
+     * Emitted when the player can start pressing buttons, after the computer-generated
+     * sequence is displayed.
+     */
+    void playerTurn();
+
+    /**
+     * Emitted when the player finished pressing buttons, and it's time for the computer to
+     * display the next sequence.
+     */
+    void computerTurn();
+
 };
 
 /*
 something creative: playing with sound
-Add timer logic in model
 */
 
 #endif // MODEL_H
