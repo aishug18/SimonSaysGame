@@ -1,3 +1,11 @@
+/**
+ * The model for the Simon game.
+ * Contains logic for the Simon game, what happens behind the scene.
+ *
+ * Aishwarya Golakoti and Nicholas Cicalese
+ * 13 March 2025
+ */
+
 #include "model.h"
 #include <random>
 
@@ -8,7 +16,7 @@ Model::Model(QObject *parent)
 {}
 
 void Model::startGame() {
-    // display sequence and enable/disable buttons
+    // disable start, red, and blue buttons, display sequence
 }
 
 void Model::buildSequence() {
@@ -61,7 +69,7 @@ void Model::pressedBlue() {
 
 void Model::displaySequence() {
     // use QTimer
-    // after displaying sequence, enable and disable buttons to allow player to play
+    // after displaying sequence, enable red and blue buttons
 }
 
 void Model::resetGame() {

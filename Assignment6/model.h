@@ -1,6 +1,14 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+/**
+ * The model for the Simon game.
+ * Contains logic for the Simon game, what happens behind the scene.
+ *
+ * Aishwarya Golakoti and Nicholas Cicalese
+ * 13 March 2025
+ */
+
 #include <QObject>
 #include <vector>
 
@@ -19,6 +27,8 @@ public:
 public slots:
     /**
      * Starts the game.
+     * Displays the computer-generated sequence.
+     * Disables start button and red and blue buttons.
      */
     void startGame();
 
@@ -34,6 +44,7 @@ public slots:
 
     /**
      * Display the computer-generated sequence.
+     * After sequence is played, enable red and blue buttons.
      */
     void displaySequence();
 
@@ -45,7 +56,7 @@ public slots:
 signals:
     /**
      * Emitted when the game is over.
-     * Disable/enable buttons and stuff like that.
+     * Disable red and blue buttons, enable start button.
      */
     void gameOver();
 
