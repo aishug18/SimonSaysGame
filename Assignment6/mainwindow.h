@@ -31,13 +31,13 @@ public slots:
      * Flash redPushButton to a bright red, then go back to original color after
      * some amount of time.
      */
-    void flashRed();
+    void flashRed(int interval, int position);
 
     /**
      * Flash bluePushButton to a bright blue, then go back to original color after
      * some amount of time.
      */
-    void flashBlue();
+    void flashBlue(int interval, int position);
 
     /**
      * It's the player's turn now, so enable red and blue push buttons.

@@ -20,6 +20,8 @@ private:
     std::vector<int> sequence; // store the sequence of colors emitted, red = 0, blue = 1
     int currentPosition;
 
+    int interval;
+
     /**
      * Build the sequence of colors by adding a new, random color to the end of sequence.
      * Then display the sequence.
@@ -68,13 +70,13 @@ signals:
      * Emitted when the red button should be lit, either when the red button is pressed
      * or when the display sequence should emit red.
      */
-    void lightUpRed();
+    void lightUpRed(int interval, int position);
 
     /**
      * Emitted when the blue button should be lit, either when the blue button is pressed
      * or when the display sequence should emit blue.
      */
-    void lightUpBlue();
+    void lightUpBlue(int interval, int position);
 
     /**
      * Emitted when the progress bar should be updated.

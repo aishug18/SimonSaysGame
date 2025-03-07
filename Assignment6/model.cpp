@@ -13,7 +13,8 @@
 Model::Model(QObject *parent)
     : QObject{parent},
     sequence{std::rand() % 2},
-    currentPosition(0)
+    currentPosition(0),
+    interval(500)
 {}
 
 void Model::startGame() {
@@ -23,6 +24,7 @@ void Model::startGame() {
 void Model::buildSequence() {
     sequence.push_back(std::rand() % 2);
     currentPosition = 0;
+    interval -= 10;
     emit computerTurn();
     displaySequence();
 }
@@ -73,13 +75,15 @@ void Model::displaySequence() {
     // use QTimer
 
     for(size_t i = 0; i < sequence.size(); i++) {
+
         if(sequence[i] == 0) {
-            emit lightUpRed();
+            emit lightUpRed(interval, i);
         }
         else {
-            emit lightUpBlue();
+            emit lightUpBlue(interval, i);
         }
     }
+
 
     emit playerTurn();  // to enable red and blue buttons
 }

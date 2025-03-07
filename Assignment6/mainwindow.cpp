@@ -101,14 +101,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::flashRed() {
-    ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
+void MainWindow::flashRed(int interval, int position) {
+    QTimer::singleShot(interval*(position+1), this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
+    ui->redPushButton->update();});
+    QTimer::singleShot(interval*(position+1) + interval, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
+    ui->redPushButton->update();})
+    // ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
     // after some time, go back to original color
     // more work to do here
+
+    //200ms  400 600 800
+    //400    600 800 1000
 }
 
-void MainWindow::flashBlue() {
-    ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
+void MainWindow::flashBlue(int interval, int position) {
+    QTimer::singleShot(interval*(position+1), this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
+    ui->bluePushButton->update();});
+    QTimer::singleShot(interval*(position+1) + interval, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
+    ui->bluePushButton->update();})
+    // ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
     // after some time, go back to original color
     // more work to do here
 }
