@@ -72,7 +72,7 @@ signals:
      */
     void lightUpRed(int interval, int position);
 
-    void playerLightUpRed(int interval);
+    void playerLightUpRed();
 
     /**
      * Emitted when the blue button should be lit, either when the blue button is pressed
@@ -80,7 +80,7 @@ signals:
      */
     void lightUpBlue(int interval, int position);
 
-    void playerLightUpBlue(int interval);
+    void playerLightUpBlue();
 
     /**
      * Emitted when the progress bar should be updated.

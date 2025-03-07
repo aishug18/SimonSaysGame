@@ -19,6 +19,8 @@ Model::Model(QObject *parent)
 {}
 
 void Model::startGame() {
+    sequence = {std::rand() % 2, std::rand() % 2};
+    interval = 1000;
     emit computerTurn();
     displaySequence();
 }
@@ -33,7 +35,7 @@ void Model::buildSequence() {
 }
 
 void Model::pressedRed() {
-    emit playerLightUpRed(interval);
+    emit playerLightUpRed();
 
     if(sequence[currentPosition] == 0) {    // Player is correct
         currentPosition++;
@@ -54,7 +56,7 @@ void Model::pressedRed() {
 }
 
 void Model::pressedBlue() {
-    emit playerLightUpBlue(interval);
+    emit playerLightUpBlue();
 
     if(sequence[currentPosition] == 1) {    // Player is correct
         currentPosition++;
@@ -87,7 +89,7 @@ void Model::displaySequence() {
         }
     }
 
-    QTimer::singleShot(interval * sequence.size(), this, [this]{emit playerTurn();});
+    QTimer::singleShot(interval * sequence.size() + interval, this, [this]{emit playerTurn();});
     //emit playerTurn();  // to enable red and blue buttons
 }
 

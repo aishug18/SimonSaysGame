@@ -33,7 +33,7 @@ public slots:
      */
     void flashRed(int interval, int position);
 
-    void playerFlashRed(int interval);
+    void playerFlashRed();
 
     /**
      * Flash bluePushButton to a bright blue, then go back to original color after
@@ -41,7 +41,7 @@ public slots:
      */
     void flashBlue(int interval, int position);
 
-    void playerFlashBlue(int interval);
+    void playerFlashBlue();
 
     /**
      * It's the player's turn now, so enable red and blue push buttons.

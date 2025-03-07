@@ -133,19 +133,19 @@ void MainWindow::flashBlue(int interval, int position) {
     // more work to do here
 }
 
-void MainWindow::playerFlashRed(int interval) {
+void MainWindow::playerFlashRed() {
     ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
     ui->redPushButton->update();
 
-    QTimer::singleShot(interval, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
+    QTimer::singleShot(400, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
     ui->redPushButton->update();});
 }
 
-void MainWindow::playerFlashBlue(int interval) {
+void MainWindow::playerFlashBlue() {
     ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
     ui->bluePushButton->update();
 
-    QTimer::singleShot(interval, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
+    QTimer::singleShot(400, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
     ui->bluePushButton->update();});
 }
 
@@ -157,13 +157,15 @@ void MainWindow::enableRedAndBlueButtons() {
 void MainWindow::disableStart() {
     // ui->gameOverLabel->setStyleSheet("QLabel: {background-color: none; border: none;}");
     // ui->gameOverLabel->setText("");
-    //ui->gameOverLabel->setVisible(false);
+    ui->gameOverLabel->setVisible(false);
     ui->startPushButton->setEnabled(false);
 }
 
 void MainWindow::displayGameOverLabel() {
-    //ui->gameOverLabel->setVisible(true);
-    ui->gameOverLabel->setStyleSheet("QLabel: {background-color: black; border: black;}");
+    ui->redPushButton->setEnabled(false);
+    ui->bluePushButton->setEnabled(false);
+    ui->gameOverLabel->setVisible(true);
+    ui->gameOverLabel->setStyleSheet("QLabel {background-color: plum; border: black; color: black; border-radius: 10px;}");
     ui->gameOverLabel->setText("GAME OVER\nYOU LOSE!!\nclick Start to play again");
     ui->startPushButton->setEnabled(true);
 }
