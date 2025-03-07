@@ -83,6 +83,15 @@ MainWindow::MainWindow(Model* model, QWidget *parent)
             this,
             &MainWindow::disableRedAndBlueButtons);
 
+    connect(model,
+            &Model::playerLightUpBlue,
+            this,
+            &MainWindow::playerFlashBlue);
+
+    connect(model,
+            &Model::playerLightUpRed,
+            this,
+            &MainWindow::playerFlashRed);
 
 
     /* FROM VIEW TO VIEW CONNECTIONS */
@@ -104,8 +113,8 @@ MainWindow::~MainWindow()
 void MainWindow::flashRed(int interval, int position) {
     QTimer::singleShot(interval*(position+1), this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
     ui->redPushButton->update();});
-    QTimer::singleShot(interval*(position+1) + interval, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
-    ui->redPushButton->update();})
+    QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
+    ui->redPushButton->update();});
     // ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
     // after some time, go back to original color
     // more work to do here
@@ -117,11 +126,27 @@ void MainWindow::flashRed(int interval, int position) {
 void MainWindow::flashBlue(int interval, int position) {
     QTimer::singleShot(interval*(position+1), this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
     ui->bluePushButton->update();});
-    QTimer::singleShot(interval*(position+1) + interval, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
-    ui->bluePushButton->update();})
+    QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
+    ui->bluePushButton->update();});
     // ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
     // after some time, go back to original color
     // more work to do here
+}
+
+void MainWindow::playerFlashRed(int interval) {
+    ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
+    ui->redPushButton->update();
+
+    QTimer::singleShot(interval, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
+    ui->redPushButton->update();});
+}
+
+void MainWindow::playerFlashBlue(int interval) {
+    ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
+    ui->bluePushButton->update();
+
+    QTimer::singleShot(interval, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
+    ui->bluePushButton->update();});
 }
 
 void MainWindow::enableRedAndBlueButtons() {
@@ -130,11 +155,15 @@ void MainWindow::enableRedAndBlueButtons() {
 }
 
 void MainWindow::disableStart() {
+    // ui->gameOverLabel->setStyleSheet("QLabel: {background-color: none; border: none;}");
+    // ui->gameOverLabel->setText("");
+    //ui->gameOverLabel->setVisible(false);
     ui->startPushButton->setEnabled(false);
 }
 
 void MainWindow::displayGameOverLabel() {
-    ui->gameOverLabel->setStyleSheet("QLabel: {background-color: white; border: black;}");
+    //ui->gameOverLabel->setVisible(true);
+    ui->gameOverLabel->setStyleSheet("QLabel: {background-color: black; border: black;}");
     ui->gameOverLabel->setText("GAME OVER\nYOU LOSE!!\nclick Start to play again");
     ui->startPushButton->setEnabled(true);
 }
