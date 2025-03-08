@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>780</width>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,8 +28,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>70</y>
+      <x>70</x>
+      <y>140</y>
       <width>301</width>
       <height>261</height>
      </rect>
@@ -55,8 +55,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>70</y>
+      <x>390</x>
+      <y>140</y>
       <width>301</width>
       <height>261</height>
      </rect>
@@ -79,11 +79,16 @@
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>13</y>
-      <width>411</width>
-      <height>20</height>
+      <x>160</x>
+      <y>50</y>
+      <width>451</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
@@ -113,8 +118,8 @@ QProgressBar::chunk {
     </property>
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>210</y>
+      <x>190</x>
+      <y>200</y>
       <width>371</width>
       <height>141</height>
      </rect>
@@ -154,11 +159,30 @@ QProgressBar::chunk {
     </property>
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>370</y>
-      <width>161</width>
-      <height>71</height>
+      <x>280</x>
+      <y>450</y>
+      <width>191</width>
+      <height>81</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: white;
+	color: black;
+	border-radius: 10px;
+}
+QPushButton:hover {
+	background-color: lightgray;
+}
+
+QPushButton:disabled {
+	background-color: darkgray;
+}</string>
     </property>
     <property name="text">
      <string>Start Game</string>
@@ -170,8 +194,8 @@ QProgressBar::chunk {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>22</height>
+     <width>780</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>

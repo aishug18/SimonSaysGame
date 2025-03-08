@@ -13,8 +13,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QTimer>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 
 
 MainWindow::MainWindow(Model* model, QWidget *parent)
@@ -122,24 +120,24 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::flashRed(int interval, int position) {
-    QTimer::singleShot(interval*(position+1), this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
+    QTimer::singleShot(interval*(position+1), this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red; color: white;}"));
     ui->redPushButton->update();
     //Play red button sound effect
     player->setSource(QUrl("qrc:/sounds/sound/red.mp3"));
     player->play();});
 
-    QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
+    QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed; color: white;}"));
     ui->redPushButton->update();});
 }
 
 void MainWindow::flashBlue(int interval, int position) {
-    QTimer::singleShot(interval*(position+1), this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
+    QTimer::singleShot(interval*(position+1), this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue; color: white;}"));
     ui->bluePushButton->update();
     //Play blue button sound effect
     player->setSource(QUrl("qrc:/sounds/sound/blue.mp3"));
     player->play();});
 
-    QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
+    QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue; color: white;}"));
     ui->bluePushButton->update();});
 }
 
@@ -147,10 +145,10 @@ void MainWindow::playerFlashRed() {
     player->setSource(QUrl("qrc:/sounds/sound/red.mp3"));
     player->play();
 
-    ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
+    ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red; color: white;}"));
     ui->redPushButton->update();
 
-    QTimer::singleShot(400, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
+    QTimer::singleShot(400, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed; color: white;}"));
     ui->redPushButton->update();});
 }
 
@@ -158,10 +156,10 @@ void MainWindow::playerFlashBlue() {
     player->setSource(QUrl("qrc:/sounds/sound/blue.mp3"));
     player->play();
 
-    ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
+    ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue; color: white;}"));
     ui->bluePushButton->update();
 
-    QTimer::singleShot(400, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
+    QTimer::singleShot(400, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue; color: white;}"));
     ui->bluePushButton->update();});
 }
 

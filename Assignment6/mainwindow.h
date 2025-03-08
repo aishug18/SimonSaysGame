@@ -15,7 +15,6 @@
 
 #include <QMainWindow>
 #include "model.h"
-#include <QtMultimedia>
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
