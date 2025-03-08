@@ -13,6 +13,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QTimer>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 
 MainWindow::MainWindow(Model* model, QWidget *parent)
     : QMainWindow(parent)
@@ -41,11 +44,12 @@ MainWindow::MainWindow(Model* model, QWidget *parent)
             model,
             &Model::pressedBlue);
 
-
-
-
-
     /* FROM MODEL TO VIEW CONNECTIONS */
+
+    connect(model,
+            &Model::endPlayerSequence,
+            this,
+            &MainWindow::playSuccesfulRoundSE);
 
     // Update progressBar
     connect(model,
@@ -83,13 +87,13 @@ MainWindow::MainWindow(Model* model, QWidget *parent)
             this,
             &MainWindow::disableRedAndBlueButtons);
 
-    connect(model,
-            &Model::playerLightUpBlue,
+    connect(ui->bluePushButton,
+            &QPushButton::clicked,
             this,
             &MainWindow::playerFlashBlue);
 
-    connect(model,
-            &Model::playerLightUpRed,
+    connect(ui->redPushButton,
+            &QPushButton::clicked,
             this,
             &MainWindow::playerFlashRed);
 
@@ -102,38 +106,47 @@ MainWindow::MainWindow(Model* model, QWidget *parent)
             this,
             &MainWindow::disableStart);
 
+    //Set up for sound player
+    player = new QMediaPlayer;
+    audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    audioOutput->setVolume(30);
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete player;
+    delete audioOutput;
 }
 
 void MainWindow::flashRed(int interval, int position) {
     QTimer::singleShot(interval*(position+1), this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
-    ui->redPushButton->update();});
+    ui->redPushButton->update();
+    //Play red button sound effect
+    player->setSource(QUrl("qrc:/sounds/sound/red.mp3"));
+    player->play();});
+
     QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: darkRed;}"));
     ui->redPushButton->update();});
-    // ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
-    // after some time, go back to original color
-    // more work to do here
-
-    //200ms  400 600 800
-    //400    600 800 1000
 }
 
 void MainWindow::flashBlue(int interval, int position) {
     QTimer::singleShot(interval*(position+1), this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
-    ui->bluePushButton->update();});
+    ui->bluePushButton->update();
+    //Play blue button sound effect
+    player->setSource(QUrl("qrc:/sounds/sound/blue.mp3"));
+    player->play();});
+
     QTimer::singleShot(interval*(position+1) + interval/2, this, [this]{ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: darkBlue;}"));
     ui->bluePushButton->update();});
-    // ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
-    // after some time, go back to original color
-    // more work to do here
 }
 
 void MainWindow::playerFlashRed() {
+    player->setSource(QUrl("qrc:/sounds/sound/red.mp3"));
+    player->play();
+
     ui->redPushButton->setStyleSheet(QString("QPushButton {background-color: red;}"));
     ui->redPushButton->update();
 
@@ -142,6 +155,9 @@ void MainWindow::playerFlashRed() {
 }
 
 void MainWindow::playerFlashBlue() {
+    player->setSource(QUrl("qrc:/sounds/sound/blue.mp3"));
+    player->play();
+
     ui->bluePushButton->setStyleSheet(QString("QPushButton {background-color: blue;}"));
     ui->bluePushButton->update();
 
@@ -155,13 +171,14 @@ void MainWindow::enableRedAndBlueButtons() {
 }
 
 void MainWindow::disableStart() {
-    // ui->gameOverLabel->setStyleSheet("QLabel: {background-color: none; border: none;}");
-    // ui->gameOverLabel->setText("");
     ui->gameOverLabel->setVisible(false);
     ui->startPushButton->setEnabled(false);
 }
 
 void MainWindow::displayGameOverLabel() {
+    QTimer::singleShot(600, this, [this]{player->setSource(QUrl("qrc:/sounds/sound/gameOver.mp3"));
+        player->play();});
+
     ui->redPushButton->setEnabled(false);
     ui->bluePushButton->setEnabled(false);
     ui->gameOverLabel->setVisible(true);
@@ -173,4 +190,9 @@ void MainWindow::displayGameOverLabel() {
 void MainWindow::disableRedAndBlueButtons() {
     ui->redPushButton->setEnabled(false);
     ui->bluePushButton->setEnabled(false);
+}
+
+void MainWindow::playSuccesfulRoundSE(){
+    QTimer::singleShot(800, this, [this]{player->setSource(QUrl("qrc:/sounds/sound/successfulRound.mp3"));
+    player->play();});
 }

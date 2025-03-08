@@ -6,8 +6,10 @@
  * URL of GitHub Repository: https://github.com/UofU-CS3505/cs3505-assignment6-Aishwarya1036
  *
  * Description of Creative Element:
- *  __
  *
+ * We chose to add sound effects to our Simon game. Sound effects play whenever a button is lit up by a player or the computer, when the player completes a round successfully, and when
+ * the player loses the game. To add the sound effects, we used QMediaPlayer and QAudioOutput from the QMultimedia library. To gain access to the .mp3 files, we added a .qrc file
+ * to the Qt project, which is an XML file that contains information for outside resources that the application can use.
  *
  * 13 March 2025
  */

@@ -18,9 +18,8 @@ class Model : public QObject
 
 private:
     std::vector<int> sequence; // store the sequence of colors emitted, red = 0, blue = 1
-    int currentPosition;
-
-    int interval;
+    int currentPosition; // The current position
+    int interval; // The time interval in ms between
 
     /**
      * Build the sequence of colors by adding a new, random color to the end of sequence.
@@ -72,15 +71,11 @@ signals:
      */
     void lightUpRed(int interval, int position);
 
-    void playerLightUpRed();
-
     /**
      * Emitted when the blue button should be lit, either when the blue button is pressed
      * or when the display sequence should emit blue.
      */
     void lightUpBlue(int interval, int position);
-
-    void playerLightUpBlue();
 
     /**
      * Emitted when the progress bar should be updated.
@@ -100,10 +95,11 @@ signals:
      */
     void computerTurn();
 
-};
+    /**
+     * Emitted when the player finishes the sequence
+     */
+    void endPlayerSequence();
 
-/*
-something creative: playing with sound
-*/
+};
 
 #endif // MODEL_H

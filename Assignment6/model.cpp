@@ -7,9 +7,7 @@
  */
 
 #include "model.h"
-#include <random>
 #include <QTimer>
-#include <QDebug>
 
 Model::Model(QObject *parent)
     : QObject{parent},
@@ -29,19 +27,19 @@ void Model::buildSequence() {
     sequence.push_back(std::rand() % 2);
     currentPosition = 0;
 
-    interval -= 10;
+    interval -= 100;
     emit computerTurn();
     QTimer::singleShot(1000, this, [this]{displaySequence();});
 }
 
 void Model::pressedRed() {
-    emit playerLightUpRed();
 
     if(sequence[currentPosition] == 0) {    // Player is correct
         currentPosition++;
 
         if(currentPosition >= static_cast<int>(sequence.size())) {
             emit updateProgress(100);
+            emit endPlayerSequence();
             buildSequence();
         }
         else {
@@ -56,13 +54,13 @@ void Model::pressedRed() {
 }
 
 void Model::pressedBlue() {
-    emit playerLightUpBlue();
 
     if(sequence[currentPosition] == 1) {    // Player is correct
         currentPosition++;
 
         if(currentPosition >= static_cast<int>(sequence.size())) {
             emit updateProgress(100);
+            emit endPlayerSequence();
             buildSequence();
         }
         else {
@@ -90,7 +88,6 @@ void Model::displaySequence() {
     }
 
     QTimer::singleShot(interval * sequence.size() + interval, this, [this]{emit playerTurn();});
-    //emit playerTurn();  // to enable red and blue buttons
 }
 
 void Model::resetGame() {

@@ -15,6 +15,9 @@
 
 #include <QMainWindow>
 #include "model.h"
+#include <QtMultimedia>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,6 +36,9 @@ public slots:
      */
     void flashRed(int interval, int position);
 
+    /**
+     * Makes the red button flash when clicked.
+     */
     void playerFlashRed();
 
     /**
@@ -41,6 +47,9 @@ public slots:
      */
     void flashBlue(int interval, int position);
 
+    /**
+     * Makes the blue button flash when clicked.
+     */
     void playerFlashBlue();
 
     /**
@@ -64,11 +73,18 @@ public slots:
      */
     void disableRedAndBlueButtons();
 
+    /**
+     * Plays a sound effect indicating a successful round.
+     */
+    void playSuccesfulRoundSE();
+
 public:
-    MainWindow(Model* model, QWidget *parent = nullptr);
-    ~MainWindow();
+    MainWindow(Model* model, QWidget *parent = nullptr); //Constructor
+    ~MainWindow(); //Destructor
 
 private:
     Ui::MainWindow *ui;
+    QMediaPlayer* player;
+    QAudioOutput* audioOutput;
 };
 #endif // MAINWINDOW_H
